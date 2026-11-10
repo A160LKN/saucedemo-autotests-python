@@ -1,0 +1,17 @@
+# Виртуальное окружение: у каждого создаётся своё
+.venv/
+
+# Кэш Python и pytest
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Результаты и отчёты Allure
+allure-results/
+allure-report/
+
+# PyCharm: личные настройки среды
+.idea/
+
+# macOS: служебные файлы
+.DS_Store
