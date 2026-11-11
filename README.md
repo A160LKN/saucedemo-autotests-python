@@ -2,7 +2,7 @@
 
 Учебный проект UI-автотестов для демо-магазина [saucedemo.com](https://www.saucedemo.com/) на Python.
 
-Этот же проект на Java: [saucedemo-autotests](https://github.com/A160LKN/saucedemo-autotests).
+Этот же проект на Java: [saucedemo-autotests-java](https://github.com/A160LKN/saucedemo-autotests-java).
 
 ## Стек
 
