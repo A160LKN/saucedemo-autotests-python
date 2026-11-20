@@ -1,0 +1,47 @@
+# UI-тесты SauceDemo на каждый push, PR и раз в сутки: сайт чужой, его могут поменять в любой день.
+name: UI tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: "30 3 * * *" # каждый день в 08:30 по Астане
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Скачать код
+        uses: actions/checkout@v7
+
+      - name: Установить Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - name: Установить зависимости
+        run: pip install -r requirements.txt
+
+      - name: Запустить тесты
+        env:
+          HEADLESS: "1"
+        run: pytest
+
+      - name: Собрать Allure-отчёт
+        if: always()
+        run: npx --yes allure-commandline@2 generate allure-results --clean -o allure-report
+
+      - name: Сохранить отчёт
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: allure-report
+          path: allure-report
+          retention-days: 14

@@ -57,6 +57,9 @@ pip install -r requirements.txt
 # запустить тесты
 pytest
 
+# без окна браузера — так тесты идут в CI (GitHub Actions, каждый push и раз в сутки)
+HEADLESS=1 pytest
+
 # открыть Allure-отчёт
 allure serve allure-results
 ```

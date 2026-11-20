@@ -1,3 +1,5 @@
+import os
+
 import allure
 import pytest
 from selenium import webdriver
@@ -14,8 +16,17 @@ def driver():
         "profile.password_manager_leak_detection": False,
     })
 
+    # Запуск без окна браузера: HEADLESS=1 pytest. Так тесты идут в CI (GitHub Actions),
+    # где экрана нет; размер окна задаётся явно, иначе headless-Chrome открывается маленьким
+    if os.getenv("HEADLESS") == "1":
+        options.add_argument("--headless=new")
+        options.add_argument("--window-size=1280,900")
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-dev-shm-usage")
+
     driver = webdriver.Chrome(options=options)
-    driver.maximize_window()
+    if os.getenv("HEADLESS") != "1":
+        driver.maximize_window()
 
     yield driver  # здесь выполняется тест
 
